@@ -276,8 +276,8 @@ class NLS_Shortcode {
                 'current'   => max( 1, $paged ),
                 'total'     => (int) $q->max_num_pages,
                 'type'      => 'list',
-                'prev_text' => '&#10094;',
-                'next_text' => '&#10095;',
+                'prev_text' => '&lt;',
+                'next_text' => '&gt;',
             ) );
             if ( $links ) {
                 echo '<nav class="nlp-pagination" aria-label="' . esc_attr__( 'News pagination', 'news-listing' ) . '">';
