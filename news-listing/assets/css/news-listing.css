@@ -133,6 +133,11 @@
   width: 36px;
   height: 36px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  line-height: 1;
 }
 .nlp-nav:focus {
   outline: 2px solid #3b82f6;
