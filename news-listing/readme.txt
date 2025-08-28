@@ -21,6 +21,8 @@ This plugin provides a single shortcode:
 - **category_icon**: `true`/`false` (default true)
 - **tags_badges**: `true`/`false` (default true)
 
+For grid layout, pagination is automatically handled when used on pages and archives via the standard `paged`/`page` query vars, and links render below the grid.
+
 == Installation ==
 1. Upload the `news-listing` folder to `/wp-content/plugins/`.
 2. Activate the plugin.
