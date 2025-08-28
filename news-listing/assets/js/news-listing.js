@@ -6,15 +6,20 @@
     var c = parseInt(wrapper.getAttribute("data-count"), 10);
     return isNaN(c) || c < 1 ? 1 : c;
   }
+  function getGapPx(track) {
+    var cs = window.getComputedStyle(track);
+    var g = parseFloat(cs.columnGap || cs.gap || "16");
+    return isNaN(g) ? 16 : g;
+  }
   function animateScroll(track, targetLeft) {
     try {
       track.scrollTo({ left: targetLeft, behavior: "smooth" });
       return;
     } catch (e) {}
-    var start = track.scrollLeft;
-    var delta = targetLeft - start;
-    var startTime = null;
-    var duration = 300;
+    var start = track.scrollLeft,
+      delta = targetLeft - start,
+      startTime = null,
+      duration = 300;
     function step(ts) {
       if (startTime === null) startTime = ts;
       var t = (ts - startTime) / duration;
@@ -34,31 +39,38 @@
       var item = track.querySelector(".nlp-item");
       if (!item) return 320 * count;
       var rect = item.getBoundingClientRect();
-      var gap = 16; // matches CSS gap
+      var gap = getGapPx(track);
       return (rect.width + gap) * count;
     }
     function clamp(to) {
       if (to < 0) return 0;
       var max = track.scrollWidth - track.clientWidth;
-      if (to > max) return max;
-      return to;
+      return to > max ? max : to;
     }
     function scrollByStep(dir) {
       var delta = cardStep() * dir;
-      var target = clamp(track.scrollLeft + delta);
-      animateScroll(track, target);
+      animateScroll(track, clamp(track.scrollLeft + delta));
+    }
+    function handleActivate(dir) {
+      return function (e) {
+        if (e.type === "click") {
+          scrollByStep(dir);
+        } else if (e.type === "keydown") {
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+            e.preventDefault();
+            scrollByStep(dir);
+          }
+        }
+      };
     }
     if (prev) {
-      prev.addEventListener("click", function () {
-        scrollByStep(-1);
-      });
+      prev.addEventListener("click", handleActivate(-1));
+      prev.addEventListener("keydown", handleActivate(-1));
     }
     if (next) {
-      next.addEventListener("click", function () {
-        scrollByStep(1);
-      });
+      next.addEventListener("click", handleActivate(1));
+      next.addEventListener("keydown", handleActivate(1));
     }
-    // Keyboard support
     track.addEventListener("keydown", function (e) {
       if (e.key === "ArrowLeft") {
         e.preventDefault();
