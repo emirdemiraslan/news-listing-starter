@@ -25,6 +25,8 @@ For grid layout, pagination is automatically handled when used on pages and arch
 
 For carousel layout, items scroll horizontally with scroll-snap. Previous/Next buttons are included and keyboard arrows navigate one card at a time; touch swipe is supported by the browser.
 
+Category icons are an optional, soft dependency: if Advanced Custom Fields is active and a term field named category_icon (image URL) exists for the post categories, icons are shown. Otherwise, the plugin will attempt to read a category_icon URL from term meta; if none, icons are omitted.
+
 == Installation ==
 1. Upload the `news-listing` folder to `/wp-content/plugins/`.
 2. Activate the plugin.
