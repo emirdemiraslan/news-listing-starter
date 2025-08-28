@@ -84,3 +84,81 @@ title: Docs, PHPCS, tests
 acceptance:
 - README: usage, params table, examples
 - PHPCS clean; basic unit tests pass
+
+milestones:
+  - id: M6
+    name: v1.0.1 Polish & Fixes
+    exit:
+      - all T-11x acceptance checks pass
+      - before/after screenshots attached in the PR
+      - PHPCS clean; no console errors on preview
+
+tasks:
+  - id: T-110
+    milestone: M6
+    title: Simplify carousel arrows and color
+    type: enhancement
+    acceptance:
+      - Carousel left/right buttons display literal "<" and ">".
+      - Arrow color is exactly #333333; focus outline remains visible.
+      - Buttons remain ≥36×36 px hit area; have aria-labels.
+      - Don't use <button> tags for arrows, use <div> instead.
+      - use svg for the arrows.
+      - use font-size: 48px;
+    files:
+      - "news-listing/assets/css/news-listing.css"
+      - "news-listing/assets/js/news-listing.js"
+
+  - id: T-111
+    milestone: M6
+    title: Carousel step equals `visible_posts` with sliding animation
+    type: enhancement
+    acceptance:
+      - add another parameter to the shortcode <visible_posts> to set the number of posts to display in the carousel.
+      - Clicking arrows or pressing Left/Right scrolls by exactly `<visible_posts>` cards (card width + current inter-card gap).
+      - For carousel layout, <visible_posts> is the number of posts to display in the carousel.
+      - Smooth sliding animation (~250–400ms) using vanilla JS (requestAnimationFrame or smooth scroll) — no jQuery.
+      - Works when remaining items < count (stops at ends gracefully; no overscroll).
+      - Wrapper exposes `data-count="<visible_posts>"` so JS can determine step size; keyboard matches click behavior.
+    files:
+      - "news-listing/includes/Shortcode.php"   # add data-count to wrapper
+      - "news-listing/assets/js/news-listing.js"
+      - "news-listing/assets/css/news-listing.css"
+
+  - id: T-112
+    milestone: M6
+    title: Fix grid pagination layout and arrow styles
+    type: bug
+    acceptance:
+      - Pagination list items render horizontally (inline/inline-flex), not stacked vertically.
+      - Prev/Next show as "<" and ">" and have no border box; numbered pages keep minimal styling.
+      - `aria-label` present on the nav wrapper; focusable controls show visible focus outline.
+      - Verified on static pages and archives.
+    files:
+      - "news-listing/assets/css/news-listing.css"
+      - "news-listing/includes/Shortcode.php"
+
+  - id: T-113
+    milestone: M6
+    title: Overlay category icons on thumbnail (bottom-right horizontal stack)
+    type: enhancement
+    acceptance:
+      - Category icons render inside the thumbnail, bottom-right corner, stacked horizontally with 6–8px gap.
+      - No layout shift when icons load; appear above the image (proper z-index) and do not obscure tag badges.
+      - `alt` equals category name; if no icon, omit cleanly (no empty container).
+      - Works with 1–4 icons.
+    files:
+      - "news-listing/includes/Shortcode.php"   # move icons markup into thumbnail container
+      - "news-listing/assets/css/news-listing.css"
+
+  - id: T-114
+    milestone: M6
+    title: Increase grid/item gaps to 32px (and align carousel gap)
+    type: enhancement
+    acceptance:
+      - Grid gutter between items is exactly 32px at all breakpoints.
+      - Carousel inter-card gap is 32px; T-111 step calculation uses card width + 32px.
+      - Visual check confirms consistent spacing across grid and carousel.
+    files:
+      - "news-listing/assets/css/news-listing.css"
+      - "news-listing/assets/js/news-listing.js"

@@ -5,7 +5,7 @@
  * Version: 1.0.1
  * Requires at least: 4.9.8
  * Requires PHP: 7.2.1
- * Author: Your Name
+ * Author: Emir Demiraslan
  * License: GPLv2 or later
  * Text Domain: news-listing
  * Domain Path: /languages
