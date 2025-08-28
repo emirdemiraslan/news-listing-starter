@@ -106,6 +106,28 @@
   color: #fff;
   border-color: #222;
 }
+/* T-112: horizontal list and simplified prev/next */
+.nlp-pagination ul {
+  display: inline-flex;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nlp-pagination li {
+  display: inline;
+}
+.nlp-pagination .prev,
+.nlp-pagination .next {
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+}
+.nlp-pagination a:focus,
+.nlp-pagination span:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
 
 /* Carousel base (scroll-snap) */
 .nlp-wrapper[data-layout="carousel"] {
