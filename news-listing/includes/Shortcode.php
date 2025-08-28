@@ -165,7 +165,7 @@ class NLS_Shortcode {
         echo '<div class="' . $container_classes . '" data-layout="' . esc_attr( $layout ) . '">';
 
         if ( 'carousel' === $layout ) {
-            echo '<button class="nlp-nav nlp-nav--prev" type="button" aria-label="' . esc_attr__( 'Previous', 'news-listing' ) . '">&#10094;</button>';
+            echo '<button class="nlp-nav nlp-nav--prev" type="button" aria-label="' . esc_attr__( 'Previous', 'news-listing' ) . '">&lt;</button>';
             echo '<div class="nlp-carousel" tabindex="0">';
         } else {
             echo '<div class="nlp-grid">';
@@ -255,7 +255,7 @@ class NLS_Shortcode {
         echo '</div>'; // grid or carousel container.
 
         if ( 'carousel' === $layout ) {
-            echo '<button class="nlp-nav nlp-nav--next" type="button" aria-label="' . esc_attr__( 'Next', 'news-listing' ) . '">&#10095;</button>';
+            echo '<button class="nlp-nav nlp-nav--next" type="button" aria-label="' . esc_attr__( 'Next', 'news-listing' ) . '">&gt;</button>';
         }
 
         // Pagination (grid only): placeholder to be improved in later tasks.
