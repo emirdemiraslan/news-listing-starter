@@ -23,6 +23,8 @@ This plugin provides a single shortcode:
 
 For grid layout, pagination is automatically handled when used on pages and archives via the standard `paged`/`page` query vars, and links render below the grid.
 
+For carousel layout, items scroll horizontally with scroll-snap. Previous/Next buttons are included and keyboard arrows navigate one card at a time; touch swipe is supported by the browser.
+
 == Installation ==
 1. Upload the `news-listing` folder to `/wp-content/plugins/`.
 2. Activate the plugin.
