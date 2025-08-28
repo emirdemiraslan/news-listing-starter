@@ -162,10 +162,14 @@ class NLS_Shortcode {
 
         ob_start();
         $container_classes = 'nlp-wrapper nlp-layout-' . esc_attr( $layout );
-        echo '<div class="' . $container_classes . '" data-layout="' . esc_attr( $layout ) . '">';
+        $data_count = (int) $count;
+        echo '<div class="' . $container_classes . '" data-layout="' . esc_attr( $layout ) . '" data-count="' . esc_attr( $data_count ) . '">';
 
         if ( 'carousel' === $layout ) {
-            echo '<button class="nlp-nav nlp-nav--prev" type="button" aria-label="' . esc_attr__( 'Previous', 'news-listing' ) . '">&lt;</button>';
+            echo '<div class="nlp-nav nlp-nav--prev" role="button" tabindex="0" aria-label="' . esc_attr__( 'Previous', 'news-listing' ) . '">'
+                . '<svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+                . '<path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>'
+                . '</div>';
             echo '<div class="nlp-carousel" tabindex="0">';
         } else {
             echo '<div class="nlp-grid">';
@@ -255,7 +259,10 @@ class NLS_Shortcode {
         echo '</div>'; // grid or carousel container.
 
         if ( 'carousel' === $layout ) {
-            echo '<button class="nlp-nav nlp-nav--next" type="button" aria-label="' . esc_attr__( 'Next', 'news-listing' ) . '">&gt;</button>';
+            echo '<div class="nlp-nav nlp-nav--next" role="button" tabindex="0" aria-label="' . esc_attr__( 'Next', 'news-listing' ) . '">'
+                . '<svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+                . '<path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>'
+                . '</div>';
         }
 
         // Pagination (grid only): placeholder to be improved in later tasks.

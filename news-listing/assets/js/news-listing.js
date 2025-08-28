@@ -1,29 +1,79 @@
-(function(){
-  function byClass(el, cls){ return el.getElementsByClassName(cls); }
-  function initCarousel(wrapper){
-    var track = byClass(wrapper, 'nlp-carousel')[0];
-    if(!track) return;
-    var prev = byClass(wrapper, 'nlp-nav--prev')[0];
-    var next = byClass(wrapper, 'nlp-nav--next')[0];
-    function scrollBy(delta){
-      track.scrollLeft += delta;
+(function () {
+  function byClass(el, cls) {
+    return el.getElementsByClassName(cls);
+  }
+  function getCount(wrapper) {
+    var c = parseInt(wrapper.getAttribute("data-count"), 10);
+    return isNaN(c) || c < 1 ? 1 : c;
+  }
+  function animateScroll(track, targetLeft) {
+    try {
+      track.scrollTo({ left: targetLeft, behavior: "smooth" });
+      return;
+    } catch (e) {}
+    var start = track.scrollLeft;
+    var delta = targetLeft - start;
+    var startTime = null;
+    var duration = 300;
+    function step(ts) {
+      if (startTime === null) startTime = ts;
+      var t = (ts - startTime) / duration;
+      if (t > 1) t = 1;
+      track.scrollLeft = start + delta * t;
+      if (t < 1) requestAnimationFrame(step);
     }
-    function cardWidth(){
-      var item = track.querySelector('.nlp-item');
-      return item ? (item.getBoundingClientRect().width + 16) : 320;
+    requestAnimationFrame(step);
+  }
+  function initCarousel(wrapper) {
+    var track = byClass(wrapper, "nlp-carousel")[0];
+    if (!track) return;
+    var prev = byClass(wrapper, "nlp-nav--prev")[0];
+    var next = byClass(wrapper, "nlp-nav--next")[0];
+    var count = getCount(wrapper);
+    function cardStep() {
+      var item = track.querySelector(".nlp-item");
+      if (!item) return 320 * count;
+      var rect = item.getBoundingClientRect();
+      var gap = 16; // matches CSS gap
+      return (rect.width + gap) * count;
     }
-    if(prev){ prev.addEventListener('click', function(){ scrollBy(-cardWidth()); }); }
-    if(next){ next.addEventListener('click', function(){ scrollBy(cardWidth()); }); }
+    function clamp(to) {
+      if (to < 0) return 0;
+      var max = track.scrollWidth - track.clientWidth;
+      if (to > max) return max;
+      return to;
+    }
+    function scrollByStep(dir) {
+      var delta = cardStep() * dir;
+      var target = clamp(track.scrollLeft + delta);
+      animateScroll(track, target);
+    }
+    if (prev) {
+      prev.addEventListener("click", function () {
+        scrollByStep(-1);
+      });
+    }
+    if (next) {
+      next.addEventListener("click", function () {
+        scrollByStep(1);
+      });
+    }
     // Keyboard support
-    track.addEventListener('keydown', function(e){
-      if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollBy(-cardWidth()); }
-      if(e.key === 'ArrowRight'){ e.preventDefault(); scrollBy(cardWidth()); }
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        scrollByStep(-1);
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        scrollByStep(1);
+      }
     });
   }
-  document.addEventListener('DOMContentLoaded', function(){
-    var wrappers = document.getElementsByClassName('nlp-wrapper');
-    for(var i=0;i<wrappers.length;i++){
-      if(wrappers[i].getAttribute('data-layout') === 'carousel'){
+  document.addEventListener("DOMContentLoaded", function () {
+    var wrappers = document.getElementsByClassName("nlp-wrapper");
+    for (var i = 0; i < wrappers.length; i++) {
+      if (wrappers[i].getAttribute("data-layout") === "carousel") {
         initCarousel(wrappers[i]);
       }
     }
