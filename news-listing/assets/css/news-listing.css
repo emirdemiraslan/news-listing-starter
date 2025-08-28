@@ -4,7 +4,7 @@
 }
 .nlp-grid {
   display: grid;
-  grid-gap: 16px;
+  grid-gap: 32px;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 .nlp-item {
@@ -152,7 +152,7 @@
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 16px;
+  gap: 32px;
   outline: 0;
   padding: 4px;
 }
@@ -166,7 +166,7 @@
     .nlp-carousel[style*="--nlp-visible"]
     .nlp-item {
     /* Each card width = (container - total gaps) / N */
-    width: calc((100% - (var(--nlp-visible) - 1) * 16px) / var(--nlp-visible));
+    width: calc((100% - (var(--nlp-visible) - 1) * 32px) / var(--nlp-visible));
     min-width: 0;
     flex: 0 0 auto;
   }
