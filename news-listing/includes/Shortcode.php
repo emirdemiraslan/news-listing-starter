@@ -162,7 +162,8 @@ class NLS_Shortcode {
 
         ob_start();
         $container_classes = 'nlp-wrapper nlp-layout-' . esc_attr( $layout );
-        echo '<div class="' . $container_classes . '" data-layout="' . esc_attr( $layout ) . '">';
+        $data_count = (int) $count;
+        echo '<div class="' . $container_classes . '" data-layout="' . esc_attr( $layout ) . '" data-count="' . esc_attr( $data_count ) . '">';
 
         if ( 'carousel' === $layout ) {
             echo '<button class="nlp-nav nlp-nav--prev" type="button" aria-label="' . esc_attr__( 'Previous', 'news-listing' ) . '">&lt;</button>';
