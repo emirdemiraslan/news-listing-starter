@@ -242,6 +242,7 @@ class NLS_Shortcode {
                 echo '<a class="nlp-thumb" href="' . esc_url( get_permalink( $post_id ) ) . '">';
                 echo $thumb_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- from core helper already escaped.
                 echo $badges_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- constructed with esc_html.
+                echo $icons_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized URLs and attrs.
                 echo '</a>';
 
                 echo '<h3 class="nlp-title"><a href="' . esc_url( get_permalink( $post_id ) ) . '">' . esc_html( get_the_title( $post_id ) ) . '</a></h3>';
@@ -249,7 +250,8 @@ class NLS_Shortcode {
                 $excerpt = wp_trim_words( get_the_excerpt( $post_id ), 22, '&hellip;' );
                 echo '<div class="nlp-excerpt">' . wp_kses_post( $excerpt ) . '</div>';
 
-                echo $icons_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                // Removed separate icons output to overlay them within thumbnail.
+                // echo $icons_html;
 
                 echo '</article>';
             }

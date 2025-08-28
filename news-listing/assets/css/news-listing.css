@@ -63,6 +63,7 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  z-index: 2;
 }
 .nlp-badge {
   background: rgba(0, 0, 0, 0.75);
@@ -82,13 +83,22 @@
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-top: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .nlp-icon {
   width: 20px;
   height: 20px;
   display: inline-block;
+}
+/* Overlay icons inside thumbnail, bottom-right */
+.nlp-thumb {
+  position: relative;
+}
+.nlp-thumb .nlp-icons {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
 }
 
 /* Pagination */
