@@ -27,6 +27,8 @@ For carousel layout, items scroll horizontally with scroll-snap. Previous/Next b
 
 Category icons are an optional, soft dependency: if Advanced Custom Fields is active and a term field named category_icon (image URL) exists for the post categories, icons are shown. Otherwise, the plugin will attempt to read a category_icon URL from term meta; if none, icons are omitted.
 
+Tag badges: up to 3 tags are shown as small badges over the thumbnail; long labels are truncated with ellipsis and hidden from screen readers as they duplicate visible text elsewhere.
+
 == Installation ==
 1. Upload the `news-listing` folder to `/wp-content/plugins/`.
 2. Activate the plugin.
