@@ -26,6 +26,7 @@ class NLS_Shortcode {
             'layout'        => 'grid',      // 'grid' | 'carousel'
             'category'      => '',          // comma-separated slugs
             'count'         => 9,           // max posts
+            'visible_posts' => '',          // carousel: number of visible cards (optional; defaults to count)
             'category_icon' => 'true',      // 'true' | 'false'
             'tags_badges'   => 'true',      // 'true' | 'false'
         );
@@ -147,6 +148,7 @@ class NLS_Shortcode {
         $layout         = self::normalize_layout( $atts['layout'] );
         $category_slugs = self::parse_category_slugs( $atts['category'] );
         $count          = self::normalize_count( $atts['count'] );
+        $visible_posts  = isset( $atts['visible_posts'] ) && $atts['visible_posts'] !== '' ? self::normalize_count( $atts['visible_posts'] ) : $count;
         $category_icon  = self::normalize_boolean( $atts['category_icon'] );
         $tags_badges    = self::normalize_boolean( $atts['tags_badges'] );
 
@@ -162,7 +164,7 @@ class NLS_Shortcode {
 
         ob_start();
         $container_classes = 'nlp-wrapper nlp-layout-' . esc_attr( $layout );
-        $data_count = (int) $count;
+        $data_count = ( 'carousel' === $layout ) ? (int) $visible_posts : (int) $count;
         echo '<div class="' . $container_classes . '" data-layout="' . esc_attr( $layout ) . '" data-count="' . esc_attr( $data_count ) . '">';
 
         if ( 'carousel' === $layout ) {
