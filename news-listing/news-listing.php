@@ -2,7 +2,7 @@
 /**
  * Plugin Name: News Listing Shortcode
  * Description: Configurable news listings via [news_listing] shortcode with grid or carousel layouts, tag badges, and ACF-powered category icons.
- * Version: 0.1.0
+ * Version: 1.0.1
  * Requires at least: 4.9.8
  * Requires PHP: 7.2.1
  * Author: Your Name
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Basic constants.
 if ( ! defined( 'NLS_VERSION' ) ) {
-    define( 'NLS_VERSION', '0.1.0' );
+    define( 'NLS_VERSION', '1.0.1' );
 }
 if ( ! defined( 'NLS_FILE' ) ) {
     define( 'NLS_FILE', __FILE__ );

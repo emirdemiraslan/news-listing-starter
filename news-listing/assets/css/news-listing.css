@@ -189,3 +189,10 @@
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
+span.nlp-badge {
+  font-size: 1em;
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: #9a1220;
+}
