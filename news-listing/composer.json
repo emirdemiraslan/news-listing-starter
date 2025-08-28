@@ -1,0 +1,9 @@
+{
+  "name": "news-listing/plugin",
+  "type": "library",
+  "autoload": {
+    "classmap": [
+      "includes/"
+    ]
+  }
+}
