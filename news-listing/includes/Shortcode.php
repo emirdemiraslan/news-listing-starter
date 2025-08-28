@@ -17,47 +17,85 @@ class NLS_Shortcode {
     }
 
     /**
-     * Render the shortcode.
+     * Return default shortcode attributes.
      *
-     * @param array $atts
-     * @return string
+     * @return array
      */
-    public static function render( $atts ) {
-        $defaults = array(
+    public static function get_default_atts() {
+        return array(
             'layout'        => 'grid',      // 'grid' | 'carousel'
             'category'      => '',          // comma-separated slugs
             'count'         => 9,           // max posts
             'category_icon' => 'true',      // 'true' | 'false'
             'tags_badges'   => 'true',      // 'true' | 'false'
         );
+    }
 
-        $atts = shortcode_atts( $defaults, is_array( $atts ) ? $atts : array(), 'news_listing' );
-
-        $layout        = strtolower( trim( (string) $atts['layout'] ) );
-        if ( $layout !== 'grid' && $layout !== 'carousel' ) {
-            $layout = 'grid';
+    /**
+     * Normalize layout value.
+     *
+     * @param mixed $layout
+     * @return string 'grid' or 'carousel'
+     */
+    private static function normalize_layout( $layout ) {
+        $value = strtolower( trim( (string) $layout ) );
+        if ( $value !== 'grid' && $value !== 'carousel' ) {
+            return 'grid';
         }
+        return $value;
+    }
 
+    /**
+     * Parse comma-separated category slugs and sanitize each.
+     *
+     * @param mixed $csv
+     * @return array
+     */
+    public static function parse_category_slugs( $csv ) {
         $category_slugs = array();
-        if ( is_string( $atts['category'] ) && strlen( $atts['category'] ) > 0 ) {
-            $parts = explode( ',', $atts['category'] );
+        if ( is_string( $csv ) && strlen( $csv ) > 0 ) {
+            $parts = explode( ',', $csv );
             foreach ( $parts as $slug ) {
-                $s = sanitize_title( $slug );
-                if ( $s !== '' ) {
-                    $category_slugs[] = $s;
+                $sanitized = sanitize_title( $slug );
+                if ( $sanitized !== '' ) {
+                    $category_slugs[] = $sanitized;
                 }
             }
         }
+        return $category_slugs;
+    }
 
-        $count = absint( $atts['count'] );
+    /**
+     * Normalize the count attribute to a positive integer, fallback to default (9).
+     *
+     * @param mixed $value
+     * @return int
+     */
+    public static function normalize_count( $value ) {
+        $count = absint( $value );
         if ( $count <= 0 ) {
             $count = 9;
         }
+        return $count;
+    }
 
-        $category_icon = ( $atts['category_icon'] === true || $atts['category_icon'] === 'true' || $atts['category_icon'] === '1' );
-        $tags_badges   = ( $atts['tags_badges'] === true || $atts['tags_badges'] === 'true' || $atts['tags_badges'] === '1' );
+    /**
+     * Normalize common truthy string/boolean values to boolean.
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    public static function normalize_boolean( $value ) {
+        return ( $value === true || $value === 'true' || $value === '1' || $value === 1 );
+    }
 
-        // Build query args. When category slugs provided, OR them using category_name CSV (WP handles OR for CSV in category_name).
+    /**
+     * Resolve the current paged value from query vars.
+     * Grid uses pagination; carousel does not.
+     *
+     * @return int
+     */
+    public static function get_paged() {
         $paged = 1;
         if ( get_query_var( 'paged' ) ) {
             $paged = (int) get_query_var( 'paged' );
@@ -67,18 +105,54 @@ class NLS_Shortcode {
         if ( $paged < 1 ) {
             $paged = 1;
         }
+        return $paged;
+    }
 
+    /**
+     * Build WP_Query arguments based on inputs.
+     *
+     * @param string $layout
+     * @param array  $category_slugs
+     * @param int    $count
+     * @param int    $paged
+     * @return array
+     */
+    public static function build_query_args( $layout, $category_slugs, $count, $paged ) {
         $args = array(
             'post_type'           => 'post',
             'post_status'         => 'publish',
-            'posts_per_page'      => $count,
+            'posts_per_page'      => (int) $count,
             'ignore_sticky_posts' => true,
-            'paged'               => ( 'grid' === $layout ? $paged : 1 ),
+            'paged'               => ( 'grid' === $layout ? max( 1, (int) $paged ) : 1 ),
         );
 
         if ( ! empty( $category_slugs ) ) {
-            $args['category_name'] = implode( ',', $category_slugs ); // OR across slugs.
+            // OR across slugs via category_name CSV.
+            $args['category_name'] = implode( ',', $category_slugs );
         }
+
+        return $args;
+    }
+
+    /**
+     * Render the shortcode.
+     *
+     * @param array $atts
+     * @return string
+     */
+    public static function render( $atts ) {
+        $defaults = self::get_default_atts();
+        $atts = shortcode_atts( $defaults, is_array( $atts ) ? $atts : array(), 'news_listing' );
+
+        $layout         = self::normalize_layout( $atts['layout'] );
+        $category_slugs = self::parse_category_slugs( $atts['category'] );
+        $count          = self::normalize_count( $atts['count'] );
+        $category_icon  = self::normalize_boolean( $atts['category_icon'] );
+        $tags_badges    = self::normalize_boolean( $atts['tags_badges'] );
+
+        // Build query args. When category slugs provided, OR them using category_name CSV (WP handles OR for CSV in category_name).
+        $paged = self::get_paged();
+        $args  = self::build_query_args( $layout, $category_slugs, $count, $paged );
 
         $q = new WP_Query( $args );
 
