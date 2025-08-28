@@ -86,9 +86,11 @@
   flex-wrap: nowrap;
 }
 .nlp-icon {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   display: inline-block;
+  border: 0.5px solid #fff;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 /* Overlay icons inside thumbnail, bottom-right */
 .nlp-thumb {
@@ -96,8 +98,8 @@
 }
 .nlp-thumb .nlp-icons {
   position: absolute;
-  right: 8px;
-  bottom: 8px;
+  right: 4px;
+  bottom: 4px;
   z-index: 2;
 }
 
