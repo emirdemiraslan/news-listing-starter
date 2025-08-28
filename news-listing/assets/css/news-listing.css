@@ -121,9 +121,20 @@
   outline: 0;
   padding: 4px;
 }
+/* Ensure exactly N visible cards fit without cropping when --nlp-visible is provided */
 .nlp-carousel .nlp-item {
   min-width: 280px;
   scroll-snap-align: start;
+}
+@supports (width: calc(100%)) {
+  .nlp-wrapper[data-layout="carousel"]
+    .nlp-carousel[style*="--nlp-visible"]
+    .nlp-item {
+    /* Each card width = (container - total gaps) / N */
+    width: calc((100% - (var(--nlp-visible) - 1) * 16px) / var(--nlp-visible));
+    min-width: 0;
+    flex: 0 0 auto;
+  }
 }
 .nlp-nav {
   background: #222;
