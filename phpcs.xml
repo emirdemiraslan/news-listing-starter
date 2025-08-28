@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="News Listing Coding Standard">
+    <description>WordPress + PSR-12 rules.</description>
+    <file>news-listing</file>
+    <rule ref="PSR12"/>
+    <rule ref="WordPress-Extra"/>
+    <config name="ignore_warnings_on_exit" value="1"/>
+    <arg value="sp"/>
+</ruleset>

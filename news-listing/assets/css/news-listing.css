@@ -1,0 +1,33 @@
+/* News Listing Shortcode — base styles (WP 4.9.8-compatible) */
+.nlp-wrapper{position:relative}
+.nlp-grid{display:grid;grid-gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.nlp-item{display:flex;flex-direction:column}
+.nlp-title{font-size:1.1rem;line-height:1.3;margin:8px 0}
+.nlp-excerpt{font-size:.95rem;color:#333}
+.nlp-empty{opacity:.8}
+
+/* Thumbnail with 3:2 fallback (padding-top) */
+.nlp-thumb{display:block;position:relative;width:100%;}
+.nlp-thumb::before{content:"";display:block;padding-top:66.666%;background:#f2f2f2}
+.nlp-thumb__img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.nlp-thumb__placeholder{position:absolute;top:0;left:0;right:0;bottom:0;background:#e9e9e9}
+
+/* Tags badges overlay */
+.nlp-badges{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:6px;flex-wrap:wrap}
+.nlp-badge{background:rgba(0,0,0,.75);color:#fff;font-size:.75rem;line-height:1;padding:4px 6px;border-radius:4px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Category icons row */
+.nlp-icons{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.nlp-icon{width:20px;height:20px;display:inline-block}
+
+/* Pagination */
+.nlp-pagination{margin-top:16px}
+.nlp-pagination .page-numbers{padding:6px 10px;border:1px solid #ddd;margin-right:6px;text-decoration:none}
+.nlp-pagination .current{background:#222;color:#fff;border-color:#222}
+
+/* Carousel base (scroll-snap) */
+.nlp-wrapper[data-layout="carousel"]{display:flex;align-items:center;gap:8px}
+.nlp-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;outline:0;padding:4px}
+.nlp-carousel .nlp-item{min-width:280px;scroll-snap-align:start}
+.nlp-nav{background:#222;color:#fff;border:0;border-radius:4px;width:36px;height:36px;cursor:pointer}
+.nlp-nav:focus{outline:2px solid #3b82f6;outline-offset:2px}

@@ -1,0 +1,15 @@
+{
+  "name": "your-vendor/news-listing",
+  "description": "Starter scaffold for News Listing Shortcode (WP 4.9.8+, PHP 7.2.1+).",
+  "type": "project",
+  "require": {},
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "squizlabs/php_codesniffer": "^3.9",
+    "wp-coding-standards/wpcs": "^3.0"
+  },
+  "scripts": {
+    "phpcs": "phpcs --standard=phpcs.xml",
+    "phpcbf": "phpcbf --standard=phpcs.xml"
+  }
+}

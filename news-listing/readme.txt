@@ -1,0 +1,31 @@
+=== News Listing Shortcode ===
+Contributors: you
+Tags: news, posts, shortcode, carousel, grid
+Requires at least: 4.9.8
+Tested up to: 4.9.8
+Requires PHP: 7.2.1
+Stable tag: 0.1.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Configurable news listings via [news_listing] shortcode with grid or carousel layouts, tag badges, and ACF-powered category icons.
+
+== Description ==
+This plugin provides a single shortcode:
+
+`[news_listing layout="grid" category="business,technology" count="9" category_icon="true" tags_badges="true"]`
+
+- **layout**: `grid` (default) or `carousel`
+- **category**: comma-separated category slugs (optional)
+- **count**: number of posts to show (default 9)
+- **category_icon**: `true`/`false` (default true)
+- **tags_badges**: `true`/`false` (default true)
+
+== Installation ==
+1. Upload the `news-listing` folder to `/wp-content/plugins/`.
+2. Activate the plugin.
+3. Add `[news_listing]` to a page or post.
+
+== Changelog ==
+= 0.1.0 =
+* Initial scaffold.

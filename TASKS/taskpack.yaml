@@ -1,0 +1,86 @@
+version: 1
+title: Initialize plugin skeleton
+acceptance:
+- main plugin file and loader present
+- composer.json, phpcs.xml, phpunit.xml added
+- assets/, includes/, languages/ directories
+files:
+- "news-listing/news-listing.php"
+- "news-listing/includes/Shortcode.php"
+- "news-listing/assets/css/news-listing.css"
+- "news-listing/assets/js/news-listing.js"
+- "readme.txt"
+- "composer.json"
+- "phpcs.xml"
+- "phpunit.xml"
+
+
+- id: T-010
+milestone: M1
+title: Shortcode registration & attribute validation
+acceptance:
+- defaults: layout=grid, count=9, category_icon=true, tags_badges=true
+- sanitize all attrs; boolean casting; invalid values fall back to defaults
+
+
+- id: T-020
+milestone: M1
+title: Query builder for categories & count
+acceptance:
+- category slugs parsed (comma-separated); query returns posts in any listed category
+- unit tests cover slug parsing and count limits
+
+
+- id: T-030
+milestone: M2
+title: Grid renderer with pagination
+acceptance:
+- responsive grid with thumbnail, title, excerpt, icons placeholder
+- paginate_links() renders beneath grid; works on static front page and archives
+
+
+- id: T-040
+milestone: M3
+title: Carousel renderer + JS controls
+acceptance:
+- horizontal scroll-snap container; previous/next buttons; keyboard and touch support
+- no external libraries; no jQuery dependency
+
+
+- id: T-050
+milestone: M4
+title: Category icons via ACF (soft dep)
+acceptance:
+- attempts `get_field('category_icon', 'category_'+term_id)` if ACF exists; else tries `get_term_meta(term_id, 'category_icon', true)`; else omit
+- images sanitized; alt = category name
+
+
+- id: T-060
+milestone: M4
+title: Tags as thumbnail badges
+acceptance:
+- up to 3 tags; overlay top of thumbnail; truncation with ellipsis; accessible labels
+
+
+- id: T-070
+milestone: M4
+title: Styling & 3:2 thumbnails
+acceptance:
+- CSS ensures 3:2 with aspect-ratio + fallback; lazy loading; srcset
+- namespaced classes `nlp-*`; enqueued only when shortcode present
+
+
+- id: T-080
+milestone: M5
+title: Accessibility & i18n
+acceptance:
+- arrow buttons and pagination have aria-labels; focus visible
+- .pot generated; text domain `news-listing`
+
+
+- id: T-090
+milestone: M5
+title: Docs, PHPCS, tests
+acceptance:
+- README: usage, params table, examples
+- PHPCS clean; basic unit tests pass
