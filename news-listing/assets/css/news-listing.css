@@ -7,7 +7,7 @@
 .nlp-empty{opacity:.8}
 
 /* Thumbnail with 3:2 fallback (padding-top) */
-.nlp-thumb{display:block;position:relative;width:100%;}
+.nlp-thumb{display:block;position:relative;width:100%;aspect-ratio:3/2}
 .nlp-thumb::before{content:"";display:block;padding-top:66.666%;background:#f2f2f2}
 .nlp-thumb__img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
 .nlp-thumb__placeholder{position:absolute;top:0;left:0;right:0;bottom:0;background:#e9e9e9}
