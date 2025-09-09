@@ -222,7 +222,7 @@ class NLS_Shortcode {
                             $url = '';
                             if ( function_exists( 'get_field' ) ) {
                                 // ACF Term field key: category_icon (image URL).
-                                $url = (string) get_field( 'category_icon', 'category_' . $cat->term_id );
+                                $url = (string) get_field( 'category_icon', $cat->taxonomy . '_' . $cat->term_id );
                             }
                             if ( ! $url ) {
                                 // Optional fallback to term meta if a URL is stored there.
